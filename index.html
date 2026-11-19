@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet & Savory | Recipe Book</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="#home" class="logo">🍓 Sweet & Savory</a>
+
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#recipes">Recipes</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#favorites">Favorites ♡</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+
+    <header class="hero" id="home">
+        <img
+            src="images/strawberry.jpeg"
+            alt="Strawberry chef"
+            class="hero-image"
+        >
+    </header>
+
+    <!-- RECIPES -->
+
+    <section class="recipes" id="recipes">
+
+        <p class="section-subtitle">MADE WITH LOVE ♡</p>
+        <h2>Our Delicious Recipes</h2>
+        <p class="section-text">Find your next favorite dish!</p>
+
+        <input
+            type="text"
+            id="searchInput"
+            class="search-box"
+            placeholder="Search for a recipe..."
+        >
+
+        <!-- CATEGORIES -->
+
+        <div class="categories" id="categories">
+            <button class="category-btn active" onclick="filterRecipes('all', this)">All</button>
+            <button class="category-btn" onclick="filterRecipes('main', this)">Main Dish</button>
+            <button class="category-btn" onclick="filterRecipes('dessert', this)">Desserts</button>
+            <button class="category-btn" onclick="filterRecipes('healthy', this)">Healthy</button>
+        </div>
+
+        <div class="recipe-container" id="recipeContainer">
+
+            <div class="recipe-card" data-category="main">
+                <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=600" alt="Pasta">
+                <div class="recipe-info">
+                    <span>🍝 Main Dish</span>
+                    <h3>Creamy Pasta</h3>
+                    <p>A delicious and creamy pasta for a cozy dinner.</p>
+                    <button class="recipe-button" onclick="showRecipe('pasta')">View Recipe &#9825;</button>
+                    <button class="favorite-btn" onclick="toggleFavorite(this)">&#9825;</button>
+                </div>
+            </div>
+
+            <div class="recipe-card" data-category="dessert">
+                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600" alt="Chocolate Cake">
+                <div class="recipe-info">
+                    <span>🍰 Dessert</span>
+                    <h3>Chocolate Cake</h3>
+                    <p>A soft chocolate cake for sweet moments.</p>
+                    <button class="recipe-button" onclick="showRecipe('cake')">View Recipe &#9825;</button>
+                    <button class="favorite-btn" onclick="toggleFavorite(this)">&#9825;</button>
+                </div>
+            </div>
+
+            <div class="recipe-card" data-category="healthy">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600" alt="Salad">
+                <div class="recipe-info">
+                    <span>🥗 Healthy</span>
+                    <h3>Fresh Garden Salad</h3>
+                    <p>A fresh and colorful salad full of flavor.</p>
+                    <button class="recipe-button" onclick="showRecipe('salad')">View Recipe &#9825;</button>
+                    <button class="favorite-btn" onclick="toggleFavorite(this)">&#9825;</button>
+                </div>
+            </div>
+
+            <div class="recipe-card" data-category="dessert">
+                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600" alt="Strawberry Cake">
+                <div class="recipe-info">
+                    <span>🍓 Dessert</span>
+                    <h3>Strawberry Cake</h3>
+                    <p>A lovely dessert with fresh strawberries.</p>
+                    <button class="recipe-button" onclick="showRecipe('strawberry')">View Recipe &#9825;</button>
+                    <button class="favorite-btn" onclick="toggleFavorite(this)">&#9825;</button>
+                </div>
+            </div>
+
+        </div>
+
+        <p id="noResults">No recipes found. Try another search! ♡</p>
+<div class="add-recipe-section">
+    <h2>Share Your Recipe! ♡</h2>
+    <p>Have a delicious idea? Add it to our recipe book!</p>
+
+    <form id="recipeForm">
+
+        <input
+            type="text"
+            id="newRecipeName"
+            placeholder="Recipe name..."
+            required
+        >
+
+        <select id="newRecipeCategory" required>
+            <option value="">Choose a category</option>
+            <option value="main">Main Dish</option>
+            <option value="dessert">Dessert</option>
+            <option value="healthy">Healthy</option>
+        </select>
+
+        <textarea
+            id="newRecipeDescription"
+            placeholder="Write a short description..."
+            required
+        ></textarea>
+
+        <textarea
+            id="newRecipeIngredients"
+            placeholder="Ingredients (separate with commas)"
+            required
+        ></textarea>
+
+        <textarea
+            id="newRecipeInstructions"
+            placeholder="How do you prepare it?"
+            required
+        ></textarea>
+
+        <button type="submit" class="recipe-button">
+            Add My Recipe &#9825;
+        </button>
+
+    </form>
+</div>
+    </section>
+
+    <!-- FAVORITES -->
+
+    <section class="favorites-section" id="favorites">
+        <p class="section-subtitle">YOUR LITTLE COLLECTION ♡</p>
+        <h2>My Favorite Recipes</h2>
+        <p class="section-text">Your saved recipes will appear here!</p>
+        <div id="favoriteList" class="favorite-list">
+            <p id="emptyFavorites">You haven't added any favorites yet. 🍓</p>
+        </div>
+    </section>
+
+    <!-- RECIPE POPUP -->
+
+    <div class="recipe-modal" id="recipeModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeRecipe()">&#10005;</button>
+            <h2 id="modalTitle"></h2>
+            <h3>Ingredients ♡</h3>
+            <ul id="modalIngredients"></ul>
+            <h3>Instructions ♡</h3>
+            <p id="modalInstructions"></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>Made with love and strawberries 🍓</p>
+        <p>Sweet & Savory © 2026</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+
+</body>
+</html>
